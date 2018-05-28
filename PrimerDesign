@@ -5,10 +5,11 @@ class primerDesign():
 
 
 
-    def __init__(self, vector='', target='', enzyme1='', enzyme2=''):
+    def __init__(self, header, vector='', target='', enzyme1='', enzyme2='', startCodon = '', stopCodon= ''):
 
         #We need a check to make sure everything has been submitted into the class properly.
         #We also need a check to ensure that every target is of sufficient length in order to be an effective target (Completed)
+        #We are going to have some try except checks in the future that's for damn sure
 
 
 
@@ -20,9 +21,16 @@ class primerDesign():
         self.enzyme1 = enzyme1
         self.enzyme2 = enzyme2
 
+
+
+
         #Other variables
         self.minimumLen = 48 #Required minimum for primer design.
         self.recNucleotideNum = 24
+        self.startCodon = self.assignStartCodon(startCodon)
+        self.stopCodon = self.assignStopCodons(stopCodon)
+
+
 
 
         ###########################################################################################
@@ -72,7 +80,7 @@ class primerDesign():
     def checkTargetLength(self):
 
         #Return true if the length of the target sequence is less than the required minimum
-        if len(self.target) < self.minimumLen
+        if len(self.target) < self.minimumLen:
             return True
         else:
             return False
@@ -82,8 +90,30 @@ class primerDesign():
 
 
 
+
     #Functions after this point are exclusively action functions
-    def spliceVector(self, enzyme1, enzyme2, target): #Should we replace the enzyme1 and enzyme2 and just use the self versions?
+
+    def assignStartCodon(self,start):
+
+        if start is "":
+            startCodon = ["ATG"]
+        else:
+            startCodon = start
+
+        return startCodon
+
+
+    def assignStopCodons(self,stop):
+
+        if stop is "":
+            stopCodon = ["TAA"]
+        else:
+            stopCodon = [stop]
+        return stopCodon
+
+
+
+    def spliceVector(self, vector, enzyme1, enzyme2, target): #Should we replace the enzyme1 and enzyme2 and just use the self versions?
 
         #Get the restriction sites for both of the enzymes
         enz1 = Bio.Restriction.enzyme1.site
