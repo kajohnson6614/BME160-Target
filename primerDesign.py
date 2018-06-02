@@ -189,6 +189,7 @@ class primerDesign():
         forwardPrimer = self.target[0:recommendedNuc+1]
         if forwardPrimer.find('ATG') is not 0 :
             forwardPrimer = 'ATG' + self.target[0:recommendedNuc+1] # Change 'ATG' to self.startCodon
+            return(forwardPrimer)
         else :
             continue
         
@@ -196,6 +197,7 @@ class primerDesign():
         reversePrimer = self.reverseCompTarget[0:recommendedNuc+1]
         if self.reverseCompTarget[0:3] is not in self.revStopCodonList :
             reversePrimer = 'TTA' + self.reverseCompTarget[0:recommendedNuc+1]
+            return(reversePrimer)
         else :
             continue
         
