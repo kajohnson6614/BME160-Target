@@ -232,7 +232,7 @@ class primerDesign():
                 tempOfRev = round(mt.Tm_NN(reversePrimer), 4)
             else :
                 optimalTempFound = True
-        return(forwardPrimer, reversePrimer)
+        return([forwardPrimer, reversePrimer])
 
         
 
