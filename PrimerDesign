@@ -163,7 +163,7 @@ class primerDesign():
 
         #Set up the reverse primer
         reverseTarget = self.buildReverseComp(target)
-        reversePrimer = reverseTarget[len(target)-self.recNucleotideNum:len(target)]
+        reversePrimer = reverseTarget[0:self.recNucleotideNum+1]
 
         #Add to the forward primer a start codon
         self.restrictionEnzymeDict = {'EcoRI': ['CCG', 'CGG', 2, '>90', 2, '>90', 20], 'NotI': ['AAGGAAAAAA', 'AAAAGGAAAA', 25, 2, '>90', 20] } # Dictionary with nucleotides to add to primer with percent effeciencies. [nucleotides for beginning, nucleotides for end, percent1, hour1, percent2, hour2]
