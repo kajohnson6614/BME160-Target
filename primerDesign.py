@@ -1,6 +1,10 @@
 
 import Bio
 
+#Use this version Britney.
+
+
+
 class primerDesign():
 
 
