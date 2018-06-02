@@ -31,7 +31,7 @@ class primerDesign():
         self.targetStartIndex = None
         self.targetStopIndex = None
 
-
+        self.revStopCodonList = ['TTA', 'TCA', 'CTA']
 
 
         #Other variables
@@ -91,8 +91,8 @@ class primerDesign():
         else:
             return False
 
-    def checkForStart(self, recNumber):
-        position = self.target[0:recNumber+1].find(self.startCodon)
+    def checkForStart(self):
+        position = self.target[0:len(self.target)+1].find(self.startCodon)
         return position
 
     def checkForStop(self):
@@ -187,9 +187,17 @@ class primerDesign():
 
         #Set up the forward primer
         forwardPrimer = self.target[0:recommendedNuc+1]
-
+        if forwardPrimer.find('ATG') is not 0 :
+            forwardPrimer = 'ATG' + self.target[0:recommendedNuc+1] # Change 'ATG' to self.startCodon
+        else :
+            continue
+        
         #Set up the reverse primer
         reversePrimer = self.reverseCompTarget[0:recommendedNuc+1]
+        if self.reverseCompTarget[0:3] is not in self.revStopCodonList :
+            reversePrimer = 'TTA' + self.reverseCompTarget[0:recommendedNuc+1]
+        else :
+            continue
         
         #Temperature Variables will be written here for future usage within the loops
         #Will involve the usage of biopython classes and functions
@@ -222,8 +230,7 @@ class primerDesign():
                 tempOfRev = round(mt.Tm_NN(reversePrimer), 4)
             else :
                 optimalTempFound = True
-        
-        
+        return(forwardPrimer, reversePrimer)
 
         
 
