@@ -1,5 +1,6 @@
 
 import Bio
+from Bio.SeqUtils import MeltingTemp as mt
 
 #Use this version Britney.
 
@@ -179,7 +180,7 @@ class primerDesign():
 
     def buildPrimers(self):
         
-        recommendedNuc = 24 #Nucleotide Number. This is expected to change once called inside the two for loops that will be created.
+        recommendedNuc = 24 #Number of nucleotides used from target sequence. This is expected to change once called inside the two for loops that will be created.
         optimalTempFound = False #boolean control variable for the while loops within the method.
         
         
@@ -192,10 +193,35 @@ class primerDesign():
         
         #Temperature Variables will be written here for future usage within the loops
         #Will involve the usage of biopython classes and functions
+        tempOfFwd = "{:0.2f}".format(mt.Tm_NN(forwardPrimer))
+        tempOfRev = "{:0.2f}".format(mt.Tm_NN(reversePrimer))
         
+        while optimalTempFound is False :
+            if tempOfFwd > '60.00' :
+                recommendedNuc -= 3
+                forwardPrimer = self.target[0:recommendedNuc+1]
+                tempOfFwd = "{:0.2f}".format(mt.Tm_NN(forwardPrimer))
+            elif tempOfFwd < '54.00' :
+                recommendedNuc += 3
+                forwardPrimer = self.target[0:recommendedNuc+1]
+                tempOfFwd = "{:0.2f}".format(mt.Tm_NN(forwardPrimer))
+            else :
+                optimalTempFound = True
+                
+        optimalTempFound = False
+        recommendedNuc = 24
         
-        
-        
+        while optimalTempFound is False :
+            if tempOfRev > '60.00' :
+                recommendedNuc -= 3
+                reversePrimer = self.reverseCompTarget[0:recommendedNuc+1]
+                tempOfRev = "{:0.2f}".format(mt.Tm_NN(reversePrimer))
+            elif tempOfRev < '54.00' :
+                recommendedNuc += 3
+                reversePrimer = self.reverseCompTarget[0:recommendedNuc+1]
+                tempOfRev = "{:0.2f}".format(mt.Tm_NN(reversePrimer))
+            else :
+                optimalTempFound = True
         
         
 
