@@ -26,13 +26,15 @@ class primerDesign():
         self.reverseCompTarget = self.buildReverseComp(self.target)
         self.enzyme1 = enzyme1
         self.enzyme2 = enzyme2
+        
+        self.targetStartIndex = None
+        self.targetStopIndex = None
 
 
 
 
         #Other variables
         self.minimumLen = 48 #Required minimum for primer design.
-        self.recNucleotideNum = 24
         self.startCodon = self.assignStartCodon(startCodon)
         self.stopCodon = self.assignStopCodons(stopCodon)
 
@@ -52,9 +54,9 @@ class primerDesign():
 
         #Method calls will be here
 
-        self.lengthCheck = self.checkTargetLength()
-        self.targetSiteCheck = self.checkTarget()
-        self.modVector = self.spliceVector(enzyme1,enzyme2,target)
+        #self.lengthCheck = self.checkTargetLength()
+        #self.targetSiteCheck = self.checkTarget()
+        #self.modVector = self.spliceVector(enzyme1,enzyme2,target)
 
 
 
@@ -88,8 +90,8 @@ class primerDesign():
         else:
             return False
 
-    def checkForStart(self):
-        position = self.target[0:self.recNucleotideNum+1].find(self.startCodon)
+    def checkForStart(self, recNumber):
+        position = self.target[0:recNumber+1].find(self.startCodon)
         return position
 
     def checkForStop(self):
@@ -158,6 +160,8 @@ class primerDesign():
 
         modVectorBegin = vector[0:startIndex+beginLength]
         modVectorEnd = vector[stopIndex:]
+        self.targetStartIndex = modVectorBegin
+        self.targetStopIndex = modVectorEnd
 
         #Concatenate the vector with the target
         finalModVector = modVectorBegin+target+modVectorEnd
@@ -169,18 +173,33 @@ class primerDesign():
         #Dictionary used for the
         complement = {"A": "T", "T": "A", "C": "G", "G": "C"}
         return "".join([complement[base] for base in seq[::-1]]) #Return a new String object that is the reverse Complement
+    
 
+        
 
-    def buildPrimer(self,target):
+    def buildPrimers(self):
+        
+        recommendedNuc = 24 #Nucleotide Number. This is expected to change once called inside the two for loops that will be created.
+        optimalTempFound = False #boolean control variable for the while loops within the method.
+        
+        
 
         #Set up the forward primer
-        forwardPrimer = target[0:self.recNucleotideNum+1]
+        forwardPrimer = self.target[0:recommendedNuc+1]
 
         #Set up the reverse primer
-        reverseTarget = self.buildReverseComp(target)
-        reversePrimer = reverseTarget[0:self.recNucleotideNum+1]
+        reversePrimer = self.reverseCompTarget[0:recommendedNuc+1]
+        
+        #Temperature Variables will be written here for future usage within the loops
+        #Will involve the usage of biopython classes and functions
+        
+        
+        
+        
+        
+        
 
-        #Add to the forward primer a start codon
+        
 
 
 
