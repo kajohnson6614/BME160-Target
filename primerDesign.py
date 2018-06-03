@@ -1,5 +1,6 @@
 
 import Bio
+from Bio import Restriction as r
 from Bio.SeqUtils import MeltingTemp as mt
 
 #Use this version Britney.
@@ -36,7 +37,7 @@ class primerDesign():
 
         #Other variables
         self.minimumLen = 48 #Required minimum for primer design.
-        self.startCodon = self.assignStartCodon(startCodon)
+        self.startCodon = self.assignStartCodon(startCodon) #We should make this a user selected input from the main body.
         self.stopCodon = self.assignStopCodons(stopCodon)
 
 
@@ -57,7 +58,7 @@ class primerDesign():
 
         #self.lengthCheck = self.checkTargetLength()
         #self.targetSiteCheck = self.checkTarget()
-        #self.modVector = self.spliceVector(enzyme1,enzyme2,target)
+        self.modVector = self.spliceVector(self.vector, self.enzyme1, self.enzyme2, self.target)
 
 
 
@@ -69,12 +70,13 @@ class primerDesign():
 
     #Functions here will be checking functions only
     def checkTarget(self):
+        '''Check the target sequence for any restriction enzyme cut sites that may exist within it.  For usage in the main body loop'''
 
-        enz1 = str(r.Restriction_Dictionary.rest_dict[self.enzyme1]['site']) #Get the cut sites using biopython's built in system for restriction enzymes
-        enz2 = str(r.Restriction_Dictionary.rest_dict[self.enzyme2]['site']) #Get the cut sites using biopython's built in system for restriction enzymes
+        enz1 = (r.Restriction_Dictionary.rest_dict[self.enzyme1]["site"]) #Get the cut sites using biopython's built in system for restriction enzymes
+        enz2 = (r.Restriction_Dictionary.rest_dict[self.enzyme2]["site"]) #Get the cut sites using biopython's built in system for restriction enzymes
 
         check1 = self.target.find(enz1) #Check for
-        check2 = self.target.find(self.enzyme2)
+        check2 = self.target.find(enz2)
 
         if check1 or check2 is -1:
             return False
@@ -84,6 +86,7 @@ class primerDesign():
 
 
     def checkTargetLength(self):
+        ''' Check the target's length to see if it meets the minimum requirement for a target sequence.  For use in the main body loop'''
 
         #Return true if the length of the target sequence is less than the required minimum
         if len(self.target) < self.minimumLen:
@@ -91,11 +94,13 @@ class primerDesign():
         else:
             return False
 
-    def checkForStart(self):
+    def checkForStart(self): #May get rid of this.
+        ''' Check for the first start codon found within the target.  Mark its location'''
         position = self.target[0:len(self.target)+1].find(self.startCodon)
         return position
 
     def checkForStop(self):
+        '''Check for the first stop codon found within the target.  Mark its location'''
         position = self.reverseCompTarget[0:len(self.reverseCompTarget)].find(self.stopCodon)
         return position
 
@@ -111,7 +116,7 @@ class primerDesign():
 
     #Functions after this point are exclusively action functions
 
-    def assignStartCodon(self,start):
+    def assignStartCodon(self,start):#These may be removed with a different version in which the user picks from a drop down menu
 
         if start is "":
             startCodon = ["ATG"]
@@ -121,7 +126,7 @@ class primerDesign():
         return startCodon
 
 
-    def assignStopCodons(self,stop):
+    def assignStopCodons(self,stop): #These may be removed with a different version in which the user picks from a drop down menu
 
         if stop is "":
             stopCodon = ["TAA"]
@@ -134,12 +139,14 @@ class primerDesign():
     def spliceVector(self, vector, enzyme1, enzyme2, target): #Should we replace the enzyme1 and enzyme2 and just use the self versions?
 
         #Get the restriction sites for both of the enzymes
-        enz1 = Bio.Restriction.enzyme1.site
-        enz2 = Bio.Restriction.enzyme2.site
+        enz1 = (r.Restriction_Dictionary.rest_dict[self.enzyme1]["site"])
+        enz2 = (r.Restriction_Dictionary.rest_dict[self.enzyme2]["site"])
 
 
         enzymeOneIndex = self.vector.find(enz1) #Find the starting index of the enzyme in relation to the vector.
         enzymeTwoIndex = self.vector.find(enz2) #Find the starting index of the enzyme in relation to the vector
+        print(enzymeOneIndex)
+        print(enzymeTwoIndex)
 
 
         #Check to determine which of the enzymes is going to be the starting enzyme.
@@ -158,10 +165,11 @@ class primerDesign():
         #Splice the vector into two parts
 
         #Splicing the first half, from vector index 0 to startIndex+len(enz1)
-
         modVectorBegin = vector[0:startIndex+beginLength]
+        #Splicing the second half, from the stop site index to the end of the vector itself.
         modVectorEnd = vector[stopIndex:]
-        self.targetStartIndex = modVectorBegin
+        #Save the start and stop indexes for future usage
+        self.targetStartIndex = modVectorBegin 
         self.targetStopIndex = modVectorEnd
 
         #Concatenate the vector with the target
@@ -171,7 +179,7 @@ class primerDesign():
 
     def buildReverseComp(self,seq):
 
-        #Dictionary used for the
+        #Dictionary used for the reverse complement of a given sequence.
         complement = {"A": "T", "T": "A", "C": "G", "G": "C"}
         return "".join([complement[base] for base in seq[::-1]]) #Return a new String object that is the reverse Complement
     
@@ -191,15 +199,15 @@ class primerDesign():
             forwardPrimer = 'ATG' + self.target[0:recommendedNuc+1] # Change 'ATG' to self.startCodon
             return(forwardPrimer)
         else :
-            continue
+            pass
         
         #Set up the reverse primer
         reversePrimer = self.reverseCompTarget[0:recommendedNuc+1]
-        if self.reverseCompTarget[0:3] is not in self.revStopCodonList :
+        if self.reverseCompTarget[0:3] not in self.revStopCodonList:
             reversePrimer = 'TTA' + self.reverseCompTarget[0:recommendedNuc+1]
             return(reversePrimer)
         else :
-            continue
+            pass
         
         #Temperature Variables will be written here for future usage within the loops
         #Will involve the usage of biopython classes and functions
