@@ -46,8 +46,15 @@ class primerDesign():
         ###########################################################################################
         #Dictionaries will appear here
 
-        self.restrictionEnzymeDict = {'EcoRI': ['CCG', 'CGG', 2, '>90', 2, '>90', 20],
-                                      'NotI': ['AAGGAAAAAA', 'AAAAGGAAAA', 25, 2, '>90', 20]}  # Dictionary with nucleotides to add to primer with percent effeciencies. [nucleotides for beginning, nucleotides for end, percent1, hour1, percent2, hour2]
+        self.restrictionEnzymeDict = {'AccI': ['CCG', '>90', 20], 'AflIII': ['CC', '>90', 2], 'AscI': ['A', '>90', 2], 'AvaI': ['CC', '>90', 2],
+                                      'BamHI': ['CG', '>90',2], 'BglII': ['GA', '>90', 20], 'BssHII': ['TTG', '>90', 20], 'BstXI': ['CTGCAGAA', '>90', 20],
+                                      'ClaI': ['CC', '>90', 20], 'EcoRI': ['G', '>90', 2], 'HaeIII': ['GG', '>90', 2], 'HindIII': ['CCC', 75, 20], 
+                                      'KpnI': ['GG', '>90', 2], 'MluI': ['CG', 50, 20], 'NcoI': ['CATG', 75, 20], 'NdeI': ['GGAATTC', '>90', 20],
+                                      'NheI': ['CTA', 50, 20], 'NotI': ['AAGGAAAAAA', '>90', 20], 'NsiI': ['CCA', '>90', 2], 'PacI': ['CC', '>90', 20],
+                                      'PmeI': ['AGCTTT', '>90', 20], 'PstI': ['AA', '>90', 2], 'PvuI': ['AT', 25, 20], 'SacI': ['C', 10, 2],
+                                      'SacII': ['TCC', '>90', 20], 'SalI': ['ACGC', 75, 20], 'ScaI': ['AAA', 75, 2], 'SmaI': ['TCC', '>90', 2],
+                                      'SpeI': ['G', '>90', 20], 'SphI': ['ACAT', 50, 20], 'StuI': ['A', '>90', 2], 'XbaI': ['GC', '>90', 2],
+                                      'XhoI': ['CCG', 75, 20], 'XmaI': ['CCC', '>90', 20]}  # Dictionary with nucleotides to add to primer with percent effeciencies. [nucleotides for beginning, nucleotides for end, percent1, hour1, percent2, hour2]
 
 
 
