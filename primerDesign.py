@@ -70,8 +70,8 @@ class primerDesign():
     #Functions here will be checking functions only
     def checkTarget(self):
 
-        enz1 = r.Restriction_Dictionary.rest_dict[self.enzyme1]['site'] #Get the cut sites using biopython's built in system for restriction enzymes
-        enz2 = r.Restriction_Dictionary.rest_dict[self.enzyme2]['site'] #Get the cut sites using biopython's built in system for restriction enzymes
+        enz1 = str(r.Restriction_Dictionary.rest_dict[self.enzyme1]['site']) #Get the cut sites using biopython's built in system for restriction enzymes
+        enz2 = str(r.Restriction_Dictionary.rest_dict[self.enzyme2]['site']) #Get the cut sites using biopython's built in system for restriction enzymes
 
         check1 = self.target.find(enz1) #Check for
         check2 = self.target.find(self.enzyme2)
