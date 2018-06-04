@@ -1,5 +1,6 @@
 
 import Bio
+import re
 from Bio import Restriction as r
 from Bio.SeqUtils import MeltingTemp as mt
 
