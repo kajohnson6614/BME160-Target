@@ -1,6 +1,7 @@
 
 import Bio
 import re
+import sequenceAnalysis as sa
 from Bio import Restriction as r
 from Bio.SeqUtils import MeltingTemp as mt
 
@@ -56,7 +57,7 @@ class primerDesign():
                                       'SacII': ['TCC', '>90', 20], 'SalI': ['ACGC', 75, 20], 'ScaI': ['AAA', 75, 2], 'SmaI': ['TCC', '>90', 2],
                                       'SpeI': ['G', '>90', 20], 'SphI': ['ACAT', 50, 20], 'StuI': ['A', '>90', 2], 'XbaI': ['GC', '>90', 2],
                                       'XhoI': ['CCG', 75, 20], 'XmaI': ['CCC', '>90', 20]}  # Dictionary with nucleotides to add to primer with percent effeciencies. [nucleotides for beginning, nucleotides for end, percent1, hour1, percent2, hour2]
-
+        
 
 
 
@@ -67,6 +68,8 @@ class primerDesign():
         #self.lengthCheck = self.checkTargetLength()
         #self.targetSiteCheck = self.checkTarget()
         self.modVector = self.spliceVector(self.vector, self.enzyme1, self.enzyme2, self.target)
+        self.vectorCodons = self.convertAminoAcid()
+        
 
 
 
@@ -249,6 +252,25 @@ class primerDesign():
             else :
                 optimalTempFound = True
         return([forwardPrimer, reversePrimer])
+        
+        
+        
+        
+    def convertAminoAcid(self):
+        
+        '''Convert the vector sequence into amino acid and find where the tev exists within it'''
+        vectorCodonSeq = None
+        
+        for nuc in range(0, len(self.vector),3):
+            codon = self.vector[nuc:nuc+3]
+            if codon in sa.NucParams.dnaCodonTable:
+                vectorCodonSeq.append(sa.NucParams.dnaCodonTable[codon])
+            else:
+                pass
+            
+        return vectorCodonSeq
+                
+        
 
         
 
