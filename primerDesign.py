@@ -41,6 +41,8 @@ class primerDesign():
         self.minimumLen = 48 #Required minimum for primer design.
         self.startCodon = self.assignStartCodon(startCodon) #We should make this a user selected input from the main body.
         self.stopCodon = self.assignStopCodons(stopCodon)
+        self.tevNucIndex = None
+        self.frameCorrection = ''
 
 
 
@@ -269,7 +271,32 @@ class primerDesign():
                 pass
             
         return vectorCodonSeq
-                
+    
+    def findTEVindex(self) :
+        '''Find the TEV amino acid sequence in the vector amino acid sequence. Use the amino acid index to get
+        the nucleotide index.'''
+        
+        tevAAindex = self.vectorCodons.find(tevSeq)
+
+        tevNucIndex = tevAAindex*4
+
+        return(tevNucIndex)
+
+    def compareTEVandTargetIndex(self) :
+        '''Compare frames of TEV and target to make sure they are in the same frame.'''
+        
+        modTev = self.tevNucIndex%3
+        
+        if self.targetStartIndex%3 == 1:
+            # Need to add 2 nuc to end of restriction site in primer
+            self.frameCorrection = 'GA'
+            
+        if self.targetStartIndex%3 == 2: 
+            # Need to add 1 nuc to end of restriction site in primer
+            self.frameCorrection = 'G'
+        else: 
+            # Need to add NO nuc to end of restriction site in primer
+            self.frameCorrection = ''
         
 
         
