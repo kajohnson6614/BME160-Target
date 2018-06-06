@@ -25,7 +25,7 @@ class primerDesign():
         ###########################################################################################
         #Save the vector, target, and enzymes
         self.header = head
-        self.vector = vector
+        self.vector = 'GAAAACCTGTATTTTCAGGGCGCCATGGATCCGGAATTCAAAGGCCTACGTCGACGAGCTCAACTAGTGCGGCCGCACTCGAGCACCACCACCACCACCACTGAGATC'
         self.target = target
         self.reverseCompTarget = self.buildReverseComp(self.target)
         self.enzyme1 = enzyme1
@@ -41,7 +41,6 @@ class primerDesign():
         self.minimumLen = 48 #Required minimum for primer design.
         self.startCodon = self.assignStartCodon(startCodon) #We should make this a user selected input from the main body.
         self.stopCodon = self.assignStopCodons(stopCodon)
-        self.tevNucIndex = None
         self.frameCorrection = ''
 
 
@@ -96,8 +95,7 @@ class primerDesign():
         else:
             return True
 
-
-
+        
     def checkTargetLength(self):
         ''' Check the target's length to see if it meets the minimum requirement for a target sequence.  For use in the main body loop'''
 
@@ -116,13 +114,6 @@ class primerDesign():
         '''Check for the first stop codon found within the target.  Mark its location'''
         position = self.reverseCompTarget[0:len(self.reverseCompTarget)].find(self.stopCodon)
         return position
-
-
-
-
-
-
-
 
 
 
@@ -182,8 +173,8 @@ class primerDesign():
         #Splicing the second half, from the stop site index to the end of the vector itself.
         modVectorEnd = vector[stopIndex:]
         #Save the start and stop indexes for future usage
-        self.targetStartIndex = modVectorBegin 
-        self.targetStopIndex = modVectorEnd
+        self.targetStartIndex = len(modVectorBegin)
+        self.targetStopIndex = len(modVectorBegin) + len(self.target)-1
 
         #Concatenate the vector with the target
         finalModVector = modVectorBegin+target+modVectorEnd
@@ -272,21 +263,10 @@ class primerDesign():
             
         return vectorCodonSeq
     
-    def findTEVindex(self) :
-        '''Find the TEV amino acid sequence in the vector amino acid sequence. Use the amino acid index to get
-        the nucleotide index.'''
-        
-        tevAAindex = self.vectorCodons.find(tevSeq)
 
-        tevNucIndex = tevAAindex*4
-
-        return(tevNucIndex)
-
-    def compareTEVandTargetIndex(self) :
-        '''Compare frames of TEV and target to make sure they are in the same frame.'''
-        
-        modTev = self.tevNucIndex%3
-        
+    def checkTargetFrame(self) :
+        '''Find frame of target to make sure it is still in the same frame after cut site.'''
+                
         if self.targetStartIndex%3 == 1:
             # Need to add 2 nuc to end of restriction site in primer
             self.frameCorrection = 'GA'
