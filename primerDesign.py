@@ -13,7 +13,7 @@ class primerDesign():
 
 
 
-    def __init__(self, head, vector='', target='', enzyme1='', enzyme2='', startCodon = '', stopCodon= ''):
+    def __init__(self, head, target='', enzyme1='', enzyme2='', startCodon = '', stopCodon= ''):
 
         #We need a check to make sure everything has been submitted into the class properly.
         #We also need a check to ensure that every target is of sufficient length in order to be an effective target (Completed)
