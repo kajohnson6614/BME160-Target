@@ -50,6 +50,8 @@ class primerDesign():
         self.revFrameCorrection = ''
         self.forwardPrimer = None
         self.reversePrimer = None
+        self.tempOfFwd = None
+        self.tempOfRev = None
 
 
 
@@ -198,35 +200,35 @@ class primerDesign():
         
 ######### Might need to delete start check
         #Set up the forward primer
-        forwardPrimer = self.target[0:recommendedNuc+1]
-        if forwardPrimer.find('ATG') is not 0 :
-            forwardPrimer = 'ATG' + self.target[0:recommendedNuc+1] # Change 'ATG' to self.startCodon
-            return(forwardPrimer)
+        self.forwardPrimer = self.target[0:recommendedNuc+1]
+        if self.forwardPrimer.find('ATG') is not 0 :
+            self.forwardPrimer = 'ATG' + self.target[0:recommendedNuc+1] # Change 'ATG' to self.startCodon
+            return(self.forwardPrimer)
         else :
             pass
         
         #Set up the reverse primer
-        reversePrimer = self.reverseCompTarget[0:recommendedNuc+1]
+        self.reversePrimer = self.reverseCompTarget[0:recommendedNuc+1]
         if self.reverseCompTarget[0:3] not in self.revStopCodonList:
-            reversePrimer = 'TTA' + self.reverseCompTarget[0:recommendedNuc+1]
-            return(reversePrimer)
+            self.reversePrimer = 'TTA' + self.reverseCompTarget[0:recommendedNuc+1]
+            return(self.reversePrimer)
         else :
             pass
         
         #Temperature Variables will be written here for future usage within the loops
         #Will involve the usage of biopython classes and functions
-        tempOfFwd = round(mt.Tm_NN(self.forwardPrimer),4)
-        tempOfRev = round(mt.Tm_NN(self.reversePrimer), 4)
+        self.tempOfFwd = round(mt.Tm_NN(self.forwardPrimer),4)
+        self.tempOfRev = round(mt.Tm_NN(self.reversePrimer), 4)
         
         while optimalTempFound is False :
-            if tempOfFwd >= 60.0 :
+            if self.tempOfFwd >= 60.0 :
                 recommendedNuc -= 3
                 self.forwardPrimer = self.target[0:recommendedNuc+1]
-                tempOfFwd = round(mt.Tm_NN(self.forwardPrimer), 4)
-            elif tempOfFwd <= 54.00 :
+                self.tempOfFwd = round(mt.Tm_NN(self.forwardPrimer), 4)
+            elif self.tempOfFwd <= 54.00 :
                 recommendedNuc += 3
                 self.forwardPrimer = self.target[0:recommendedNuc+1]
-                tempOfFwd = round(mt.Tm_NN(self.forwardPrimer), 4)
+                self.tempOfFwd = round(mt.Tm_NN(self.forwardPrimer), 4)
             else :
                 optimalTempFound = True
                 
@@ -234,17 +236,17 @@ class primerDesign():
         recommendedNuc = 24
         
         while optimalTempFound is False :
-            if tempOfRev >= 60.00 :
+            if self.tempOfRev >= 60.00 :
                 recommendedNuc -= 3
                 self.reversePrimer = self.reverseCompTarget[0:recommendedNuc+1]
-                tempOfRev = round(mt.Tm_NN(self.reversePrimer), 4)
+                self.tempOfRev = round(mt.Tm_NN(self.reversePrimer), 4)
             elif tempOfRev <= 54.00 :
                 recommendedNuc += 3
                 self.reversePrimer = self.reverseCompTarget[0:recommendedNuc+1]
-                tempOfRev = round(mt.Tm_NN(self.reversePrimer), 4)
+                self.tempOfRev = round(mt.Tm_NN(self.reversePrimer), 4)
             else :
                 optimalTempFound = True
-        return(self.forwardPrimer, self.reversePrimer)
+        return(self.forwardPrimer, self.reversePrimer, self.tempOfFwd, self.tempOfRev)
         
         
         
