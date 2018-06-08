@@ -8,6 +8,7 @@ import CommandLine
 import sequenceAnalysis
 import primerDesign
 import Bio
+import sys
 
 
 
@@ -49,19 +50,54 @@ def main():
 
     #Verbosity Boolean
     verb = cl.args.verbosity
+    
+    #File Name
+    targetFile = cl.args.target
 
 
     #Check to see if all of the required elements are in place.  If any value is at none, terminate the program with a message
-    if cl.args.target or restrictionEnzyme1 or restrictionEnzyme2 is None:
-        print("Error:Please ensure that all required variables have been inputted into the command line: \n","These required inputs are: Target Sequence, Restriction Enzyme One, Restriction Enzyme Two\n")
+    #if cl.args.target or restrictionEnzyme1 or restrictionEnzyme2 is None:
+     #   print("Error:Please ensure that all required variables have been inputted into the command line: \n","These required inputs are: Target Sequence, Restriction Enzyme One, Restriction Enzyme Two\n")
+      #  sys.exit
+    #else:
+    #    pass
+    
+    
+    
+    
+        
 
 
 
-    fastA = sequenceAnalysis.FastAreader(cl.args.target)#Read from the file collected by CommandLine class
+    fastA = sequenceAnalysis.FastAreader(targetFile)#Read from the file collected by CommandLine class
     for head, seq in fastA.readFasta(): #Ideally there should be only one fastA to read given a run.
 
         #If we decide otherwise, place all of the class method calls within the loop
-        createdPrimer = primerDesign.primerDesign(head,"",seq, restrictionEnzyme1, restrictionEnzyme2, startCodon, stopCodon)
+        createdPrimer = primerDesign.primerDesign(head,seq, restrictionEnzyme1, restrictionEnzyme2, startCodon, stopCodon)
+        
+        
+    createdPrimer.buildPrimers() #Build the primers using the built in buildPrimers method.  Results are stored in the class object
+    
+    #Checks on the primers will be conducted here.  All output should be to standard output instead of to a file
+    print(verb)
+    
+    if verb is True: #Verbosity mode output.  If enabled, writes to a file instead of std out.
+        with open("PrimerOut.txt", "w") as p:
+            p.write(createdPrimer.target)
+            p.write("\n")
+            p.write(createdPrimer.finalFwdPrimer+"\n")
+            p.write(str(createdPrimer.tempOfFwd))
+            p.write("\n")
+            p.write(createdPrimer.finalRevPrimer+"\n")
+            p.write(str(createdPrimer.tempOfRev))
+            
+    else: #Print to std out instead of to a file
+        print(createdPrimer.target)
+        print()
+        print(createdPrimer.finalFwdPrimer)
+        print(createdPrimer.finalRevPrimer)
+        print(str(createdPrimer.tempOfFwd))
+        print(str(createdPrimer.tempOfRev))
 
 
     #Here is where we shall put all of the checks and balances for the main function.

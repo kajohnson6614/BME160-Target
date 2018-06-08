@@ -251,8 +251,8 @@ class primerDesign():
         # Will return as: effeciency_nucleotides enzyme_recognition_site spacer_nucleotides primer_from_target
         self.checkTargetFrame()
         
-        self.finalFwdPrimer = self.restrictionEnzymeDict[self.enzyme1][0] + r.Restriction_Dictionary.rest_dict[self.enzyme1]["site"] + self.fwdFrameCorrection + self.forwardPrimer
-        self.finalRevPrimer = self.restrictionEnzymeDict[self.enzyme2][0] + r.Restriction_Dictionary.rest_dict[self.enzyme2]["site"] + self.revFrameCorrection + self.reversePrimer
+        self.finalFwdPrimer = self.restrictionEnzymeDict[self.enzyme1][0] + str(r.Restriction_Dictionary.rest_dict[self.enzyme1]["site"]) + self.fwdFrameCorrection + self.forwardPrimer
+        self.finalRevPrimer = self.restrictionEnzymeDict[self.enzyme2][0] + str(r.Restriction_Dictionary.rest_dict[self.enzyme2]["site"]) + self.revFrameCorrection + self.reversePrimer
         
         return(self.finalFwdPrimer, self.finalRevPrimer, self.tempOfFwd, self.tempOfRev)
     
@@ -276,7 +276,7 @@ class primerDesign():
         return vectorCodonSeq
     
 
-    def checkTargetFrame(self) :
+    def checkTargetFrame(self,) :
         '''Find frame of target to make sure it is still in the same frame after cut site.'''
         
         # Check if index of target in vector is in frame (a multiple of 3). If not, add appropriate amount of nucleotides to keep it in frame
