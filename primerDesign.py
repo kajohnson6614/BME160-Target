@@ -50,6 +50,8 @@ class primerDesign():
         self.revFrameCorrection = ''
         self.forwardPrimer = None
         self.reversePrimer = None
+        self.finalFwdPrimer = None
+        self.finalRevPrimer = None
         self.tempOfFwd = None
         self.tempOfRev = None
 
@@ -244,7 +246,17 @@ class primerDesign():
                 self.tempOfRev = round(mt.Tm_NN(self.reversePrimer), 4)
             else :
                 optimalTempFound = True
-        return(self.forwardPrimer, self.reversePrimer, self.tempOfFwd, self.tempOfRev)
+                
+        # Concatenate primers from target to restriction enzyme recognition sites, spacer nucleotides, and effeciency nucleotides.
+        # Will return as: effeciency_nucleotides enzyme_recognition_site spacer_nucleotides primer_from_target
+        self.checkTargetFrame(self.target)
+        
+        self.finalFwdPrimer = self.restrictionEnzymeDict[self.enzyme1][0] + r.Restriction_Dictionary.rest_dict[self.enzyme1]["site"] + self.fwdFrameCorrection + self.forwardPrimer
+        self.finalRevPrimer = self.restrictionEnzymeDict[self.enzyme2][0] + r.Restriction_Dictionary.rest_dict[self.enzyme2]["site"] + self.revFrameCorrection + self.reversePrimer
+        
+        return(self.finalFwdPrimer, self.finalRevPrimer, self.tempOfFwd, self.tempOfRev)
+    
+        
         
         
         
