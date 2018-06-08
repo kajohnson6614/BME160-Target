@@ -249,7 +249,7 @@ class primerDesign():
                 
         # Concatenate primers from target to restriction enzyme recognition sites, spacer nucleotides, and effeciency nucleotides.
         # Will return as: effeciency_nucleotides enzyme_recognition_site spacer_nucleotides primer_from_target
-        self.checkTargetFrame(self.target)
+        self.checkTargetFrame()
         
         self.finalFwdPrimer = self.restrictionEnzymeDict[self.enzyme1][0] + r.Restriction_Dictionary.rest_dict[self.enzyme1]["site"] + self.fwdFrameCorrection + self.forwardPrimer
         self.finalRevPrimer = self.restrictionEnzymeDict[self.enzyme2][0] + r.Restriction_Dictionary.rest_dict[self.enzyme2]["site"] + self.revFrameCorrection + self.reversePrimer
