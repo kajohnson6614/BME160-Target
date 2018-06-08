@@ -280,11 +280,11 @@ class primerDesign():
         '''Find frame of target to make sure it is still in the same frame after cut site.'''
         
         # Check if index of target in vector is in frame (a multiple of 3). If not, add appropriate amount of nucleotides to keep it in frame
-        if self.targetStartIndex%3 == 1:
+        if (self.targetStartIndex-1)%3 == 1:
             # Need to add 2 nuc to end of restriction site in primer
             self.fwdFrameCorrection = 'GA'
             
-        if self.targetStartIndex%3 == 2: 
+        if (self.targetStartIndex-1)%3 == 2: 
             # Need to add 1 nuc to end of restriction site in primer
             self.fwdFrameCorrection = 'G'
         else: 
