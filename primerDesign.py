@@ -240,7 +240,7 @@ class primerDesign():
                 recommendedNuc -= 3
                 self.reversePrimer = self.reverseCompTarget[0:recommendedNuc+1]
                 self.tempOfRev = round(mt.Tm_NN(self.reversePrimer), 4)
-            elif tempOfRev <= 54.00 :
+            elif self.tempOfRev <= 54.00 :
                 recommendedNuc += 3
                 self.reversePrimer = self.reverseCompTarget[0:recommendedNuc+1]
                 self.tempOfRev = round(mt.Tm_NN(self.reversePrimer), 4)
