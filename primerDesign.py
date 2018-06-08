@@ -33,8 +33,8 @@ class primerDesign():
         
         self.findEnzymeOrder(enzyme1, enzyme2)
         
-        self.enz1Length = len(enz1)
-        self.enz2Length = len(enz2)
+        self.enz1Length = len(self.enzyme1)
+        self.enz2Length = len(self.enzyme2)
         
         self.targetStartIndex = None
         self.targetStopIndex = None
@@ -87,7 +87,7 @@ class primerDesign():
 
 
 
-    def findEnzOrder(enzyme1, enzyme2) :
+    def findEnzymeOrder(self, enzyme1, enzyme2) :
         '''Find order of enzymes within vector sequence.'''
         # Obtain restriction enzyme recognition sequence
         enz1 = r.Restriction_Dictionary.rest_dict[enzyme1]["site"]
@@ -254,7 +254,7 @@ class primerDesign():
     def convertAminoAcid(self):
         
         '''Convert the vector sequence into amino acid and find where the tev exists within it'''
-        vectorCodonSeq = None
+        vectorCodonSeq = list()
         
         for nuc in range(0, len(self.vector),3):
             codon = self.vector[nuc:nuc+3]
