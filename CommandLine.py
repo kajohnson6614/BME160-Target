@@ -16,14 +16,14 @@ class Command_Line():
             All other inputs are required for program runtime.'''
         import argparse
 
-        self.parser = argparse.ArgumentParser(description= "Primer Design Argument Parser.  This program takes in a target fastA file, two restriction enzymes, and optional alternate start and stop codons",
+        self.parser = argparse.ArgumentParser(description= "Primer Design Argument Parser.  This program takes in a target fastA file, two restriction enzymes, and optional alternate start and stop codons\n"+"As of this writing, the alternate start and stop codons are inoperable",
                                               epilog="What we would want this thing to say at the end of our help section.  For now bananas.", add_help=True, prefix_chars= "-", usage='%(prog)s [options]')
 
 
         self.parser.add_argument("--target", "-t", help="Takes in a target fastA file as input for file",action= 'store', default=None)
 
-        self.parser.add_argument("--enzymeOne", "-e1", help="Takes in the first desired restriction enzyme", type=str, action='store')
-        self.parser.add_argument("--enzymeTwo", "-e2", help="Takes in the last desired restriction enzyme", type=str, action='store')
+        self.parser.add_argument("--enzymeOne", "-e1", help="Takes in the first desired restriction enzyme.\n"+"Input must be in proper format, i.e. EcoRI", type=str, action='store')
+        self.parser.add_argument("--enzymeTwo", "-e2", help="Takes in the last desired restriction enzyme.\n"+"Input must be in proper format, i.e. NotI", type=str, action='store')
 
         self.parser.add_argument("--start","-st", help="Takes in a desired start codon.  Default is set to ATG", type=str, const="ATG", nargs='?',action='store') #These would be incredibly easy to convert to a list should the desire arise.
         self.parser.add_argument("--stop","-sp", help="Takes in a desired stop codon.  Default is set to TAA", type=str, const="TAA", nargs='?', action='store')

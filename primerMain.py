@@ -21,24 +21,39 @@ def main():
     standard output or a output file.  Output would appear as the following after a successful run of main:
 
 
-    Put output format in here
-
+    ############################################################
+    
+    FastA Header
+    
+    Forward Primer
+    Primer Sequence
+    
+    
+    Melting Temperature Forward
+    GC Content Percentage Forward
+    
+    Reverse Primer
+    Primer Sequence
+    
+    Melting Temperature Reverse
+    GC Content Percentage Reverse
+    
+    
+    ############################################################
 
 
     Should errors occur such as improper target sequence or (Fill in the check conditions we can think of here),
     a message will be displayed indicating the potential problem to the user:
 
     Error:
-    This program has detected that (Place example situtation here).  Other warning messages can be placed around here detailing
-    what the user needs to do in order to avoid further issues.
+    This program has detected that (Situation).  Please correct your (Situation) and try again.
+    
+    After the message is displayed, the program will exit and return back to the terminal line.
 
     '''
-
-
-    #We are going to need a large series of checks in order to ensure no errors pop up.  Keep tabs about this point.
-
+###################################################################################################
     
-    
+    #Main method variables 
     cl = CommandLine.Command_Line()
     
     gcForward = None
@@ -63,21 +78,23 @@ def main():
     #Degree Symbol
     degree = "\u00b0"
     
+    
+    ###################################################################################################
     #Check to see if all of the required elements are in place.  If any value is at none, terminate the program with a message
     if targetFile is None:
-        print("None found")
+        print("No Target Sequence inputted.  Please retry with a proper input file in the appropriate location.  See -h for command line help.")
         sys.exit()
     else:
         pass
     
     if restrictionEnzyme1 is None:
-        print("None Enzyme found")
+        print("No Enzyme One inputted.  Please retry with an Enzyme One in the appropriate location.  See -h for command line help.")
         sys.exit()
     else:
         pass
     
     if restrictionEnzyme2 is None:
-        print("None enzyme found")
+        print("No Enzyme Two inputted.  Please retry with an Enzyme Two in the appropriate location.  See -h for command line help.")
         sys.exit()
     else:
         pass
@@ -118,26 +135,29 @@ def main():
     #Checks on the primers will be conducted here.  All output should be to standard output instead of to a file
     #print(verb)
     
+###################################################################################################    
+    #Printing Section
+    #Print either to an output file or std out depending upon verbosity condition
+    
     if verb is True: #Verbosity mode output.  If enabled, writes to a file instead of std out.
         with open("PrimerOut.txt", "w") as p:
-            p.write("#"*markerNumber+"\n")
-            p.write(createdPrimer.header+"\n")
-            p.write("\n")
+            p.write("#"*markerNumber+"\n\n")
+            p.write(createdPrimer.header+"\n\n")
             p.write("Forward Primer\n")
             p.write(createdPrimer.finalFwdPrimer+"\n")
             p.write("\n")
-            p.write("Description of the primer will go in this method call\n")
-            p.write("\n")
-            p.write(str(createdPrimer.tempOfFwd)+degree+"C"+"\n")
+            p.write("'{0}' nucleotides were added to give {1} efficiency after {2} hours.\n".format(createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme1][0],createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme1][1], createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme1][2]))
+            p.write("Buffer {} for digestion at {} Degrees.\n\n".format(createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme1][3], createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme1][4]))
+            p.write("Melting Temperature = "+str(createdPrimer.tempOfFwd)+degree+"C"+"\n")
             p.write("\n")
             p.write(str.format("{0:.4f}", gcForward)+" % GC Content\n")
             p.write("\n")
             p.write("Reverse Primer\n")
             p.write(createdPrimer.finalRevPrimer+"\n")
             p.write("\n")
-            p.write("Description of the reverse primer will go in this method call\n")
-            p.write("\n")
-            p.write(str(createdPrimer.tempOfRev)+degree+"C"+"\n")
+            p.write("'{0}' nucleotides were added to give {1} efficiency after {2} hours.\n".format(createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme2][0],createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme2][1], createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme2][2]))
+            p.write("Buffer {} for digestion at {} Degrees.\n\n".format(createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme2][3], createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme2][4]))
+            p.write("Melting Temperature = "+str(createdPrimer.tempOfRev)+degree+"C"+"\n")
             p.write("\n")
             p.write(str.format("{0:.4f}",gcReverse)+" % GC Content\n")
             p.write("#"*markerNumber)
@@ -149,21 +169,29 @@ def main():
         print("Forward Primer")
         print(createdPrimer.finalFwdPrimer)
         print()
-        print(str(createdPrimer.tempOfFwd)+"C")
+        print("'{0}' nucleotides were added to give {1} efficiency after {2} hours.\n".format(createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme1][0],createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme1][1], createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme1][2]))
+        print("Buffer {} for digestion at {} Degrees.\n".format(createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme1][3], createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme1][4]))
+        print("Melting Temperature = "+str(createdPrimer.tempOfFwd)+"C")
         print()
         print(str.format("{0:.4f}", gcForward)+" % GC Content\n")
         print()
         print("Reverse Primer")
-        print()
         print(createdPrimer.finalRevPrimer)
         print()
-        print(str(createdPrimer.tempOfRev)+"C")
+        print("'{0}' nucleotides were added to give {1} efficiency after {2} hours.\n".format(createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme2][0],createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme2][1], createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme2][2]))
+        print("Buffer {} for digestion at {} Degrees.\n".format(createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme2][3], createdPrimer.restrictionEnzymeDict[createdPrimer.enzyme2][4]))
+        print()
+        print("Melting Temperature = "+ str(createdPrimer.tempOfRev)+"C")
         print()
         print(str.format("{0:.4f}",gcReverse)+" % GC Content\n")
         print()
         print("#"*markerNumber)
 
 
+
+###################################################################################################
+        
+              
     #Here is where we shall put all of the checks and balances for the main function.
 
     #Check if the restriction enzymes are within the dictionary:  Fail if they are not
