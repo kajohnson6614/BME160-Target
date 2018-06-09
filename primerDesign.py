@@ -61,15 +61,16 @@ class primerDesign():
         ###########################################################################################
         #Dictionaries will appear here
 
-        self.restrictionEnzymeDict = {'AccI': ['CCG', '>90', 20], 'AflIII': ['CC', '>90', 2], 'AscI': ['A', '>90', 2], 'AvaI': ['CC', '>90', 2],
-                                      'BamHI': ['CG', '>90',2], 'BglII': ['GA', '>90', 20], 'BssHII': ['TTG', '>90', 20], 'BstXI': ['CTGCAGAA', '>90', 20],
-                                      'ClaI': ['CC', '>90', 20], 'EcoRI': ['G', '>90', 2], 'HaeIII': ['GG', '>90', 2], 'HindIII': ['CCC', 75, 20], 
-                                      'KpnI': ['GG', '>90', 2], 'MluI': ['CG', 50, 20], 'NcoI': ['CATG', 75, 20], 'NdeI': ['GGAATTC', '>90', 20],
-                                      'NheI': ['CTA', 50, 20], 'NotI': ['AAGGAAAAAA', '>90', 20], 'NsiI': ['CCA', '>90', 2], 'PacI': ['CC', '>90', 20],
-                                      'PmeI': ['AGCTTT', '>90', 20], 'PstI': ['AA', '>90', 2], 'PvuI': ['AT', 25, 20], 'SacI': ['C', 10, 2],
-                                      'SacII': ['TCC', '>90', 20], 'SalI': ['ACGC', 75, 20], 'ScaI': ['AAA', 75, 2], 'SmaI': ['TCC', '>90', 2],
-                                      'SpeI': ['G', '>90', 20], 'SphI': ['ACAT', 50, 20], 'StuI': ['A', '>90', 2], 'XbaI': ['GC', '>90', 2],
-                                      'XhoI': ['CCG', 75, 20], 'XmaI': ['CCC', '>90', 20]}  # Dictionary with nucleotides to add to primer with percent effeciencies. [nucleotides for beginning, nucleotides for end, percent1, hour1, percent2, hour2]
+        # Dictionary with nucleotides to add to primer with percent effeciencies, optimal buffer, and incubating temperature. [nucleotides for beginning, percent effeciency, time to get to effeciency, buffer, incubation temp]
+        self.restrictionEnzymeDict = {'AccI': ['CCG', '>90', '20', '2.1', '37'], 'AflIII': ['CC', '>90', '2', '3.1', '37'], 'AscI': ['A', '>90', '2', '1.1, 2.1, 3.1 have equal activity', '37'], 'AvaI': ['CC', '>90', '2', '2.1', '37'],
+                                      'BamHI': ['CG', '>90', '2', '3.1', '37'], 'BglII': ['GA', '>90', '20', '3.1', '37'], 'BssHII': ['TTG', '>90', '20', '1.1, 2.1, 3.1 have equal activity', '50'], 'BstXI': ['CTGCAGAA', '>90', '20', '3.1', '37'],
+                                      'ClaI': ['CC', '>90', '20', '2.1 and 3.1 have equal activity', '37'], 'EcoRI': ['G', '>90', '2', '3.1', '37'], 'HaeIII': ['GG', '>90', '2', '2.1', '37'], 'HindIII': ['CCC', '75', '20', '2.1', '37'], 
+                                      'KpnI': ['GG', '>90', '2', '1.1', '37'], 'MluI': ['CG', '50', '20', '3.1', '37'], 'NcoI': ['CATG', '75', '20', '1.1, 2.1, 3.1 have equal activity', '37'], 'NdeI': ['GGAATTC', '>90', '20', '1.1 and 2.1 have equal acgtivity', '37'],
+                                      'NheI': ['CTA', '50', '20', '1.1 and 2.1 have equal activity', '37'], 'NotI': ['AAGGAAAAAA', '>90', '20', '3.1', '37'], 'NsiI': ['CCA', '>90', '2', '3.1', '37'], 'PacI': ['CC', '>90', '20', '1.1', '37'],
+                                      'PmeI': ['AGCTTT', '>90', '20', '1.1', '37'], 'PstI': ['AA', '>90', '2', '3.1', '37'], 'PvuI': ['AT', '25', '20', '3.1', '37'], 'SacI': ['C', '10', '2', '1.1', '37'],
+                                      'SacII': ['TCC', '>90', '20', '2.1', '37'], 'SalI': ['ACGC', '75', '20', '3.1', '37'], 'ScaI': ['AAA', '75', '2', '1.1 and 2.1 have equal activity', '37'], 'SmaI': ['TCC', '>90', '2', '1.1, 2.1, 3.1 have equal activity', '25'],
+                                      'SpeI': ['G', '>90', '20', '2.1', '37'], 'SphI': ['ACAT', '50', '20', '1.1 and 2.1 have equal activity', '37'], 'StuI': ['A', '>90', '2', '2.1', '37'], 'XbaI': ['GC', '>90', '2', '2.1', '37'],
+                                      'XhoI': ['CCG', '75', '20', '2.1 and 3.1 have equal activity', '37'], 'XmaI': ['CCC', '>90', '20', '2.1', '37']}
         
 
 
