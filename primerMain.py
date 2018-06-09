@@ -37,8 +37,12 @@ def main():
 
     #We are going to need a large series of checks in order to ensure no errors pop up.  Keep tabs about this point.
 
-
+    
+    
     cl = CommandLine.Command_Line()
+    
+    gcForward = None
+    gcReverse = None
 
     #Gather the restriction enzymes
     restrictionEnzyme1 = cl.args.enzymeOne
@@ -53,14 +57,36 @@ def main():
     
     #File Name
     targetFile = cl.args.target
-
-
+    
+    #Marker Number
+    markerNumber = 60
+    #Degree Symbol
+    degree = "\u00b0"
+    
     #Check to see if all of the required elements are in place.  If any value is at none, terminate the program with a message
-    #if cl.args.target or restrictionEnzyme1 or restrictionEnzyme2 is None:
-     #   print("Error:Please ensure that all required variables have been inputted into the command line: \n","These required inputs are: Target Sequence, Restriction Enzyme One, Restriction Enzyme Two\n")
-      #  sys.exit
-    #else:
-    #    pass
+    if targetFile is None:
+        print("None found")
+        sys.exit()
+    else:
+        pass
+    
+    if restrictionEnzyme1 is None:
+        print("None Enzyme found")
+        sys.exit()
+    else:
+        pass
+    
+    if restrictionEnzyme2 is None:
+        print("None enzyme found")
+        sys.exit()
+    else:
+        pass
+    
+    
+        
+
+
+
     
     
     
@@ -68,7 +94,8 @@ def main():
         
 
 
-
+###################################################################################################
+        
     fastA = sequenceAnalysis.FastAreader(targetFile)#Read from the file collected by CommandLine class
     for head, seq in fastA.readFasta(): #Ideally there should be only one fastA to read given a run.
 
@@ -78,26 +105,63 @@ def main():
         
     createdPrimer.buildPrimers() #Build the primers using the built in buildPrimers method.  Results are stored in the class object
     
+    nucForward = sequenceAnalysis.NucParams(str(createdPrimer.forwardPrimer))
+    nucReverse = sequenceAnalysis.NucParams(str(createdPrimer.reversePrimer))
+    
+    gcForward = (nucForward.nucComposit["G"]+nucForward.nucComposit["C"])/nucForward.nucCount()
+    gcReverse = (nucReverse.nucComposit["G"]+nucReverse.nucComposit["C"])/nucReverse.nucCount()
+
+    #nucReverse.addSequence(createdPrimer.reversePrimer)
+    
+    #print(nucForward.nucComposition())
+    #print(nucReverse.nucComposition())
     #Checks on the primers will be conducted here.  All output should be to standard output instead of to a file
-    print(verb)
+    #print(verb)
     
     if verb is True: #Verbosity mode output.  If enabled, writes to a file instead of std out.
         with open("PrimerOut.txt", "w") as p:
-            p.write(createdPrimer.target)
+            p.write("#"*markerNumber+"\n")
+            p.write(createdPrimer.header+"\n")
             p.write("\n")
+            p.write("Forward Primer\n")
             p.write(createdPrimer.finalFwdPrimer+"\n")
-            p.write(str(createdPrimer.tempOfFwd))
             p.write("\n")
+            p.write("Description of the primer will go in this method call\n")
+            p.write("\n")
+            p.write(str(createdPrimer.tempOfFwd)+degree+"C"+"\n")
+            p.write("\n")
+            p.write(str.format("{0:.4f}", gcForward)+" % GC Content\n")
+            p.write("\n")
+            p.write("Reverse Primer\n")
             p.write(createdPrimer.finalRevPrimer+"\n")
-            p.write(str(createdPrimer.tempOfRev))
+            p.write("\n")
+            p.write("Description of the reverse primer will go in this method call\n")
+            p.write("\n")
+            p.write(str(createdPrimer.tempOfRev)+degree+"C"+"\n")
+            p.write("\n")
+            p.write(str.format("{0:.4f}",gcReverse)+" % GC Content\n")
+            p.write("#"*markerNumber)
             
     else: #Print to std out instead of to a file
-        print(createdPrimer.target)
+        print("#"*markerNumber)
+        print(createdPrimer.header)
         print()
+        print("Forward Primer")
         print(createdPrimer.finalFwdPrimer)
+        print()
+        print(str(createdPrimer.tempOfFwd)+"C")
+        print()
+        print(str.format("{0:.4f}", gcForward)+" % GC Content\n")
+        print()
+        print("Reverse Primer")
+        print()
         print(createdPrimer.finalRevPrimer)
-        print(str(createdPrimer.tempOfFwd))
-        print(str(createdPrimer.tempOfRev))
+        print()
+        print(str(createdPrimer.tempOfRev)+"C")
+        print()
+        print(str.format("{0:.4f}",gcReverse)+" % GC Content\n")
+        print()
+        print("#"*markerNumber)
 
 
     #Here is where we shall put all of the checks and balances for the main function.
