@@ -27,6 +27,8 @@ def main():
     
     Forward Primer
     Primer Sequence
+    {} nucleotides were added to give {} efficiency after {} hours.
+    Buffer {} for digestion at {} degrees.
     
     
     Melting Temperature Forward
@@ -34,6 +36,8 @@ def main():
     
     Reverse Primer
     Primer Sequence
+    {} nucleotides were added to give {} efficiency after {} hours.
+    Buffer {} for digestion at {} degrees.
     
     Melting Temperature Reverse
     GC Content Percentage Reverse
@@ -127,13 +131,6 @@ def main():
     
     gcForward = (nucForward.nucComposit["G"]+nucForward.nucComposit["C"])/nucForward.nucCount()
     gcReverse = (nucReverse.nucComposit["G"]+nucReverse.nucComposit["C"])/nucReverse.nucCount()
-
-    #nucReverse.addSequence(createdPrimer.reversePrimer)
-    
-    #print(nucForward.nucComposition())
-    #print(nucReverse.nucComposition())
-    #Checks on the primers will be conducted here.  All output should be to standard output instead of to a file
-    #print(verb)
     
 ###################################################################################################    
     #Printing Section

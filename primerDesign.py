@@ -1,16 +1,22 @@
 
+#
+#Britney Hernandez, Kyle Johnson
+#
+
+
 import Bio
 import re
 import sequenceAnalysis as sa
 from Bio import Restriction as r
 from Bio.SeqUtils import MeltingTemp as mt
+import sys
 
 #Use this version Britney.
 
 
 
 class primerDesign():
-
+    '''Place Docstring Here'''
 
 
     def __init__(self, head, target='', enzyme1='', enzyme2='', startCodon = '', stopCodon= ''):
@@ -28,6 +34,31 @@ class primerDesign():
         self.vector = 'GAAAACCTGTATTTTCAGGGCGCCATGGATCCGGAATTCAAAGGCCTACGTCGACGAGCTCAACTAGTGCGGCCGCACTCGAGCACCACCACCACCACCACTGAGATC'
         self.target = target
         self.reverseCompTarget = self.buildReverseComp(self.target)
+        self.restrictionEnzymeDict = {'AccI': ['CCG', '>90', '20', '2.1', '37'], 'AflIII': ['CC', '>90', '2', '3.1', '37'], 'AscI': ['A', '>90', '2', '1.1, 2.1, 3.1 have equal activity', '37'], 'AvaI': ['CC', '>90', '2', '2.1', '37'],
+                                      'BamHI': ['CG', '>90', '2', '3.1', '37'], 'BglII': ['GA', '>90', '20', '3.1', '37'], 'BssHII': ['TTG', '>90', '20', '1.1, 2.1, 3.1 have equal activity', '50'], 'BstXI': ['CTGCAGAA', '>90', '20', '3.1', '37'],
+                                      'ClaI': ['CC', '>90', '20', '2.1 and 3.1 have equal activity', '37'], 'EcoRI': ['G', '>90', '2', '3.1', '37'], 'HaeIII': ['GG', '>90', '2', '2.1', '37'], 'HindIII': ['CCC', '75', '20', '2.1', '37'], 
+                                      'KpnI': ['GG', '>90', '2', '1.1', '37'], 'MluI': ['CG', '50', '20', '3.1', '37'], 'NcoI': ['CATG', '75', '20', '1.1, 2.1, 3.1 have equal activity', '37'], 'NdeI': ['GGAATTC', '>90', '20', '1.1 and 2.1 have equal acgtivity', '37'],
+                                      'NheI': ['CTA', '50', '20', '1.1 and 2.1 have equal activity', '37'], 'NotI': ['AAGGAAAAAA', '>90', '20', '3.1', '37'], 'NsiI': ['CCA', '>90', '2', '3.1', '37'], 'PacI': ['CC', '>90', '20', '1.1', '37'],
+                                      'PmeI': ['AGCTTT', '>90', '20', '1.1', '37'], 'PstI': ['AA', '>90', '2', '3.1', '37'], 'PvuI': ['AT', '25', '20', '3.1', '37'], 'SacI': ['C', '10', '2', '1.1', '37'],
+                                      'SacII': ['TCC', '>90', '20', '2.1', '37'], 'SalI': ['ACGC', '75', '20', '3.1', '37'], 'ScaI': ['AAA', '75', '2', '1.1 and 2.1 have equal activity', '37'], 'SmaI': ['TCC', '>90', '2', '1.1, 2.1, 3.1 have equal activity', '25'],
+                                      'SpeI': ['G', '>90', '20', '2.1', '37'], 'SphI': ['ACAT', '50', '20', '1.1 and 2.1 have equal activity', '37'], 'StuI': ['A', '>90', '2', '2.1', '37'], 'XbaI': ['GC', '>90', '2', '2.1', '37'],
+                                      'XhoI': ['CCG', '75', '20', '2.1 and 3.1 have equal activity', '37'], 'XmaI': ['CCC', '>90', '20', '2.1', '37']}
+       
+        
+        if enzyme1 in self.restrictionEnzymeDict:
+            pass
+        else:
+            print("Error: restriction enzyme not found within program parameters. Please select another restriction enzyme.  A list is available within the readme file of this program.")
+            sys.exit()
+            
+        if enzyme2 in self.restrictionEnzymeDict:
+            pass
+        else:
+            print("Error: restriction enzyme not found within program parameters. Please select another restriction enzyme.  A list is available within the readme file of this program.")
+            sys.exit()
+            
+            
+            
         self.enzyme1 = None
         self.enzyme2 = None
         
@@ -59,19 +90,7 @@ class primerDesign():
 
 
         ###########################################################################################
-        #Dictionaries will appear here
-
-        # Dictionary with nucleotides to add to primer with percent effeciencies, optimal buffer, and incubating temperature. [nucleotides for beginning, percent effeciency, time to get to effeciency, buffer, incubation temp]
-        self.restrictionEnzymeDict = {'AccI': ['CCG', '>90', '20', '2.1', '37'], 'AflIII': ['CC', '>90', '2', '3.1', '37'], 'AscI': ['A', '>90', '2', '1.1, 2.1, 3.1 have equal activity', '37'], 'AvaI': ['CC', '>90', '2', '2.1', '37'],
-                                      'BamHI': ['CG', '>90', '2', '3.1', '37'], 'BglII': ['GA', '>90', '20', '3.1', '37'], 'BssHII': ['TTG', '>90', '20', '1.1, 2.1, 3.1 have equal activity', '50'], 'BstXI': ['CTGCAGAA', '>90', '20', '3.1', '37'],
-                                      'ClaI': ['CC', '>90', '20', '2.1 and 3.1 have equal activity', '37'], 'EcoRI': ['G', '>90', '2', '3.1', '37'], 'HaeIII': ['GG', '>90', '2', '2.1', '37'], 'HindIII': ['CCC', '75', '20', '2.1', '37'], 
-                                      'KpnI': ['GG', '>90', '2', '1.1', '37'], 'MluI': ['CG', '50', '20', '3.1', '37'], 'NcoI': ['CATG', '75', '20', '1.1, 2.1, 3.1 have equal activity', '37'], 'NdeI': ['GGAATTC', '>90', '20', '1.1 and 2.1 have equal acgtivity', '37'],
-                                      'NheI': ['CTA', '50', '20', '1.1 and 2.1 have equal activity', '37'], 'NotI': ['AAGGAAAAAA', '>90', '20', '3.1', '37'], 'NsiI': ['CCA', '>90', '2', '3.1', '37'], 'PacI': ['CC', '>90', '20', '1.1', '37'],
-                                      'PmeI': ['AGCTTT', '>90', '20', '1.1', '37'], 'PstI': ['AA', '>90', '2', '3.1', '37'], 'PvuI': ['AT', '25', '20', '3.1', '37'], 'SacI': ['C', '10', '2', '1.1', '37'],
-                                      'SacII': ['TCC', '>90', '20', '2.1', '37'], 'SalI': ['ACGC', '75', '20', '3.1', '37'], 'ScaI': ['AAA', '75', '2', '1.1 and 2.1 have equal activity', '37'], 'SmaI': ['TCC', '>90', '2', '1.1, 2.1, 3.1 have equal activity', '25'],
-                                      'SpeI': ['G', '>90', '20', '2.1', '37'], 'SphI': ['ACAT', '50', '20', '1.1 and 2.1 have equal activity', '37'], 'StuI': ['A', '>90', '2', '2.1', '37'], 'XbaI': ['GC', '>90', '2', '2.1', '37'],
-                                      'XhoI': ['CCG', '75', '20', '2.1 and 3.1 have equal activity', '37'], 'XmaI': ['CCC', '>90', '20', '2.1', '37']}
-        
+       
 
 
 
@@ -204,10 +223,7 @@ class primerDesign():
 ######### Might need to delete start check
         #Set up the forward primer
         self.forwardPrimer = self.target[0:recommendedNuc+1]
-        if self.forwardPrimer.find('ATG') is not 0 :
-            self.forwardPrimer = 'ATG' + self.target[0:recommendedNuc+1] # Change 'ATG' to self.startCodon
-        else :
-            pass
+
         
         #Set up the reverse primer
         self.reversePrimer = self.reverseCompTarget[0:recommendedNuc+1]
