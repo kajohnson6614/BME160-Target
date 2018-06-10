@@ -1,4 +1,4 @@
-
+#! /usr/bin/python3
 #Kyle Johnson, Britney Hernandez (kyajohns, )
 #primerMaker.py
 
