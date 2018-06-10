@@ -19,7 +19,7 @@ class Command_Line():
         import argparse
 
         self.parser = argparse.ArgumentParser(description= "Primer Design Argument Parser.  This program takes in a target fastA file, two restriction enzymes, and optional alternate start and stop codons\n"+"As of this writing, the alternate start and stop codons are inoperable",
-                                              epilog="What we would want this thing to say at the end of our help section.  For now bananas.", add_help=True, prefix_chars= "-", usage='%(prog)s [options]')
+                                              epilog="Program will output either to standard output or to a .txt file within the directory.  To see an example output, please consult the README.", add_help=True, prefix_chars= "-", usage='%(prog)s [options], -h --target --enzymeOne --enzymeTwo --start --stop --verbosity')
 
 
         self.parser.add_argument("--target", "-t", help="Takes in a target fastA file as input for file",action= 'store', default=None)
