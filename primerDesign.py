@@ -1,7 +1,7 @@
 
 #
 #Britney Hernandez, Kyle Johnson
-#
+#primerDesign
 
 
 import Bio
@@ -16,16 +16,13 @@ import sys
 
 
 class primerDesign():
-    '''Place Docstring Here'''
+    '''Class takes in a fastA file with header and sequence of target.  Also takes in an enzyme 1 and an enzyme 2.  Has the possibility of taking in an alternative start and stop codon.
+        Class then checks to determine if enzymes exist within built in dictionary and if target contains cut sites.  Should those conditions be met the class displays a message to the user and promptly exits.
+        Class then determines enzyme order in relation to the built in vector (will be changed in the future to user inputted vector).  Class then determines a spliced version of the vector and finally creates the forward and reverse primers.
+        '''
 
 
     def __init__(self, head, target='', enzyme1='', enzyme2='', startCodon = '', stopCodon= ''):
-
-        #We need a check to make sure everything has been submitted into the class properly.
-        #We also need a check to ensure that every target is of sufficient length in order to be an effective target (Completed)
-        #We are going to have some try except checks in the future that's for damn sure
-
-
 
 
         ###########################################################################################
@@ -63,6 +60,13 @@ class primerDesign():
         self.enzyme2 = None
         
         self.findEnzymeOrder(enzyme1, enzyme2)
+        
+        if self.checkTarget() is True:
+            print("Error: target sequence contains a restriction cut site(s).  Please ensure your target sequence does not contain a cut site within it.")
+            sys.exit()
+        else:
+            pass
+        
         
         self.enz1Length = len(self.enzyme1)
         self.enz2Length = len(self.enzyme2)
@@ -102,6 +106,7 @@ class primerDesign():
         #self.targetSiteCheck = self.checkTarget()
         self.modVector = self.spliceVector(self.vector, self.enzyme1, self.enzyme2, self.target)
         self.vectorCodons = self.convertAminoAcid()
+        self.buildPrimers()
         
 
 
@@ -140,7 +145,7 @@ class primerDesign():
         check1 = self.target.find(enz1) #Check for
         check2 = self.target.find(enz2)
 
-        if check1 or check2 is -1:
+        if check1 is -1 or check2 is -1:
             return False
         else:
             return True
