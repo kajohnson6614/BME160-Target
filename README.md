@@ -36,8 +36,10 @@ python primerMaker.py -t "File Name" -e1 "Enzyme One" -e2 "Enzyme Two"
 
 Please note that the restriction enzymes must be spelled with correct spelling.  For instance, EcoRI is an acceptable input but ecori or ecoR1 is not.  This is expected to change in later versions.
 
-The command line also has optional commands.  These commands include -h to display help options, --start and --stop to input custom start and stop codons (this feature has not been implemented as of version 1.0), and -v for a verbosity mode that changes output from either standard output (default) to a written text file.
+The command line also has optional commands.  These commands include -h to display help options, --start and --stop to input custom start and stop codons (this feature has not been implemented as of version 1.0), and -v for a verbosity mode that changes output from either standard output (default) to a written text file.  An example of the extend options is shown:
 
+
+python primerMaker.py -t "File Name" -e1 "Enzyme One" -e2 "Enzyme Two" -v
 
 
 
