@@ -187,28 +187,5 @@ def main():
 
 
 ###################################################################################################
-        
-              
-    #Here is where we shall put all of the checks and balances for the main function.
-
-    #Check if the restriction enzymes are within the dictionary:  Fail if they are not
-
-    #Check if the target sequence is too short to be of effective usage:  Fail if the minimum is not met
-
-    #Check if the
-
-
-
-    #Final printing stage
-    #Check the value of the verbosity input
-    #If the value is True, Send the output to a specific txt file that can be accessible to the user
-    # with open("primerOutput.txt", "w") as p:
-    #   Do the work required to give out a decent amount of information.  Especially with the primers
-
-
-    #Else if the value of verbosity is false (by default), print the information out to standard output.
-    #This will involve print statements in order to accomplish this goal.
-
-
 
 main()
