@@ -69,6 +69,7 @@ Buffer 3.1 for digestion at 37 Degrees.
 Melting Temperature = 59.0877°C
 
 0.5909 % GC Content
+
 ############################################################
 
 
