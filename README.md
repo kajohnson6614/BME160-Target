@@ -46,6 +46,35 @@ python primerMaker.py -t "File Name" -e1 "Enzyme One" -e2 "Enzyme Two" -v
 An example of the Output:
 
 
+############################################################
+
+cDNA Sequence
+
+Forward Primer
+GGAATTCGGACTCTGTCTATTGGCATCTGTCC
+
+'G' nucleotides were added to give >90 efficiency after 2 hours.
+Buffer 3.1 for digestion at 37 Degrees.
+
+Melting Temperature = 56.7253°C
+
+0.5200 % GC Content
+
+Reverse Primer
+AAGGAAAAAAGCGGCCGCTCAGGAGTCCTTGCTTGCTGGC
+
+'AAGGAAAAAA' nucleotides were added to give >90 efficiency after 20 hours.
+Buffer 3.1 for digestion at 37 Degrees.
+
+Melting Temperature = 59.0877°C
+
+0.5909 % GC Content
+############################################################
+
+
+
+
+
 
 
 
