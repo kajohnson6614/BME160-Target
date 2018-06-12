@@ -10,7 +10,6 @@ from Bio import Restriction as r
 from Bio.SeqUtils import MeltingTemp as mt
 import sys
 
-#Use this version Britney.
 
 
 
@@ -41,7 +40,7 @@ class primerDesign():
                                       'XhoI': ['CCG', '75', '20', '2.1 and 3.1 have equal activity', '37'], 'XmaI': ['CCC', '>90', '20', '2.1', '37']}
        
         
-        if enzyme1 in self.restrictionEnzymeDict:
+        if enzyme1 in self.restrictionEnzymeDict: #check the restriction enzymes to the dictionary
             pass
         else:
             print("Error: restriction enzyme not found within program parameters. Please select another restriction enzyme.  A list is available within the readme file of this program.")
@@ -60,7 +59,7 @@ class primerDesign():
         
         self.findEnzymeOrder(enzyme1, enzyme2)
         
-        if self.checkTarget() is True:
+        if self.checkTarget() is True: #check to make sure that no cut sites exist within the target
             print("Error: target sequence contains a restriction cut site(s).  Please ensure your target sequence does not contain a cut site within it.")
             sys.exit()
         else:
@@ -219,12 +218,16 @@ class primerDesign():
         
 
     def buildPrimers(self):
+        '''Build the primers by first setting initial values of the nucleotide number and the optimal temperature.  Go through a while loop
+        with the conditional being the optimal temperature.  If the calculated melting point temperature of the primer is too high, decrease the number of nucleotides.
+        If it is too low, increase the number of nucleotides.  Do this for both of the primers.  Once the melting temperature is within range of the optimal, exit the loop.
+        Then check the frames of the primers in relation to the vector.  Depending on what is found, add nucleotides to the primer to bring it into the correct frame.
+        Send primers back to the class.'''
         
         recommendedNuc = 24 #Number of nucleotides used from target sequence. This is expected to change once called inside the two for loops that will be created.
         optimalTempFound = False #boolean control variable for the while loops within the method.
         
         
-######### Might need to delete start check
         #Set up the forward primer
         self.forwardPrimer = self.target[0:recommendedNuc+1]
 
