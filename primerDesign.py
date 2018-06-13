@@ -98,10 +98,7 @@ class primerDesign():
 
         ###########################################################################################
 
-        #Method calls will be here
-
-        #self.lengthCheck = self.checkTargetLength()
-        #self.targetSiteCheck = self.checkTarget()
+        # Method calls
         self.modVector = self.spliceVector(self.vector, self.enzyme1, self.enzyme2, self.target)
         self.vectorCodons = self.convertAminoAcid()
         self.buildPrimers()
@@ -240,7 +237,7 @@ class primerDesign():
             pass
         
         #Temperature Variables will be written here for future usage within the loops
-        #Will involve the usage of biopython classes and functions
+        #Will involve the usage of biopython temperature nearest neighbor method class
         self.tempOfFwd = round(mt.Tm_NN(self.forwardPrimer),4)
         self.tempOfRev = round(mt.Tm_NN(self.reversePrimer), 4)
         
@@ -300,7 +297,7 @@ class primerDesign():
         return vectorCodonSeq
     
 
-    def checkTargetFrame(self,) :
+    def checkTargetFrame(self) :
         '''Find frame of target to make sure it is still in the same frame after cut site.'''
         
         # Check if index of target in vector is in frame (a multiple of 3). If not, add appropriate amount of nucleotides to keep it in frame
